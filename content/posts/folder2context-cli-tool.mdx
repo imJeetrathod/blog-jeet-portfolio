@@ -1,0 +1,107 @@
+---
+title: I Built a Tool to Feed My Project's Context to an AI
+description: A quick look at why I built folder2context, a simple web tool to automate feeding project context to LLMs, and what I learned from the process.
+date: 2026-01-07
+category: builds
+tags: [ai, productivity, web-tool, cli]
+---
+
+I got tired of manually copy-pasting file contents every time I wanted to ask an AI about my code. It's a repetitive task that gets old quickly.
+
+You have a problem, you want the AI's help, but first you have to explain your folder structure, copy over the relevant files, and describe how it all fits together. I decided to automate it.
+
+So, I built a small web tool called **folder2context**.
+
+## The Core Problem
+
+When using AI for coding, I kept repeating the same steps: manually copying file contents, explaining the project structure, and hoping the AI understood the context.
+
+This was especially annoying for real-world projects with nested directories and files the AI doesn't need to see, like `node_modules`.
+
+For instance, a simple project might look like this:
+
+```
+your-project/
+├── src/
+│ ├── index.js
+│ ├── utils.js
+│ └── api.js
+├── public/
+│ └── index.html
+├── package.json
+├── package-lock.json
+├── node_modules/
+└── README.md
+```
+
+I didn't want to manually clean that up or waste tokens on irrelevant files.
+
+## What My Tool Does
+
+folder2context takes a project folder and turns it into a clean, readable format that I can paste directly into a prompt.
+
+It generates a folder tree, includes the content of relevant files, and automatically ignores common clutter like `.git` or `node_modules`.
+
+The result is a single formatted output. I just select my project folder, click a button, and the context is ready to be pasted into ChatGPT, Claude, or whatever other tool I'm using.
+
+Here’s a simplified example of its output:
+
+```
+Folder: your-project
+
+DIRECTORY STRUCTURE:
+├── src
+│ ├── index.js
+│ ├── utils.js
+│ └── api.js
+├── public
+│ └── index.html
+├── package.json
+└── README.md
+
+FILE CONTENTS:
+--- FILE: src/index.js ---
+import { fetchData } from './api';
+import { formatResult } from './utils';
+
+--- FILE: src/api.js ---
+export async function fetchData() {
+// ...
+}
+```
+
+The idea is simple: give the AI the full picture without the noise.
+
+## A Quick Look at the Build
+
+I built folder2context as a plain web application. The interface is minimal—just a folder selector and a button.
+
+The core logic handles directory traversal, filtering out junk files, and formatting the output. I kept configuration to a minimum because the goal was to solve a personal problem, not build a feature-heavy developer tool.
+
+## What Worked Well
+
+The biggest win is time. I probably save 5–10 minutes every time I ask an AI for help on a real project, which adds up.
+
+It’s been most useful for debugging issues, getting refactoring suggestions, and giving an AI enough context for a quick code review. The formatted output seems to help the AI understand how files relate to each other.
+
+## Where It's Not a Perfect Solution
+
+This tool doesn't magically solve token limits. For large projects, I still have to be selective about which parts of the codebase to include.
+
+It also skips binary files and images entirely. Usually that's what I want, but sometimes I still have to manually explain what those assets are.
+
+The tool shows structure and content, not architecture. For complex systems, I still add a short explanation myself.
+
+## Was It Worth It?
+
+Definitely. It's a small utility that solves a specific, recurring problem. The time investment was a few hours, and I've already saved more time than that.
+
+It seems a few other developers I've shared it with have the same pain point. It's nothing groundbreaking, just a practical fix.
+
+## How I Use It Now
+
+I use folder2context almost daily. It's become a standard part of my workflow: identify an issue, generate context, and paste it into an AI.
+
+I even used it while building this site. When I needed AI help with Next.js components or MDX handling, I just fed the project context to the AI.
+
+If you're curious, you can try it out at [https://folder2context.vercel.app/](https://folder2context.vercel.app/).
