@@ -1,0 +1,57 @@
+---
+title: You've Used the Web UI, Now Try the AI CLI
+description: If you're used to web-based AI chats, you might be missing out on the power of the command-line interface. Here's why you should try it.
+date: 2026-01-07
+category: ai
+tags: [ai, cli, gemini, claude, developer-tools, workflow]
+---
+
+If you're a developer who's been using AI through a web interface, you're probably already familiar with how helpful it can be for generating code snippets, explaining complex topics, and debugging. But you might be missing out on a whole other level of productivity: the command-line interface (CLI).
+
+I've been exploring the CLI versions of AI assistants, and I've found that they offer some serious "superpowers" that you just can't get from a browser tab.
+
+## It's All About Context
+
+The biggest advantage of an AI CLI is that it lives where you work: in your terminal. This means it has access to your project's context. You can ask it to read files, summarize changes, and even write new code directly into your project.
+
+Instead of copying and pasting code into a web chat, you can just point the AI to a file and ask your questions. This is a huge time-saver and it allows the AI to give you much more relevant and accurate answers.
+
+## A More Integrated Workflow
+
+Using an AI in the CLI feels like having a true coding assistant. You don't have to switch back and forth between your editor and a browser. This seamless integration helps you stay in the flow and focus on your work.
+
+For example, you can pipe the output of a command directly to the AI for analysis, or have the AI write a commit message for you based on your staged changes. It's a much more natural and efficient way to work.
+
+## What I've Been Using
+
+I've experimented with both the Gemini and Claude CLIs, and I've been impressed with both. They each have their own strengths, but they both offer a glimpse into the future of AI-powered development.
+
+The Gemini CLI, for instance, is great at interacting with the local filesystem. You can ask it to "explain what this project does," and it will intelligently explore the files to give you a summary.
+
+The Claude CLI has a really nice interactive mode that feels like a natural conversation. It's also highly configurable, allowing you to create custom commands and agents to fit your workflow.
+
+## Give It a Try
+
+If you're comfortable with the command line, I highly recommend giving an AI CLI a try. It might feel a little strange at first, but I think you'll be surprised at how much it can improve your development workflow.
+
+To get started, you can often install these tools via `npm`. For example:
+
+```bash
+# For Gemini CLI
+npm install -g @google/gemini-cli
+
+# For Claude CLI
+npm install -g @anthropic-ai/claude-code
+```
+
+After installation, you'll typically need to authenticate. Once set up, you can try something simple like asking your AI CLI to explain a code snippet directly from your project:
+
+```bash
+# Using Gemini CLI (example command, actual usage might vary)
+gemini ask "Explain the function in src/utils/helpers.js"
+
+# Using Claude CLI (example command, actual usage might vary)
+claude ask "What does this file do?" --file src/components/MyComponent.js
+```
+
+It's like going from a regular car to a sports car. The regular car gets you from A to B, but the sports car makes the ride a whole lot more fun and efficient.
