@@ -1,0 +1,233 @@
+---
+title: "Building This Site: Next.js + MDX Experiment"
+description: "How I used AI assistance to build this blog with Next.js and MDX, documenting the process and tools that worked."
+date: "2024-01-05"
+category: "builds"
+tags: ["nextjs", "mdx", "static-site", "ai-assisted", "blog"]
+---
+---
+Creating a modern blog requires balancing performance, developer experience, and SEO. Next.js with MDX provides an excellent foundation for building fast, content-focused websites.
+
+## Why Next.js + MDX?
+
+The combination offers several advantages:
+
+- **Performance**: Static generation creates lightning-fast pages
+- **Developer Experience**: Write content in Markdown with React components
+- **SEO**: Built-in metadata and sitemap generation
+- **Flexibility**: Custom components within content
+
+## Project Setup
+
+Start with a clean Next.js installation:
+
+```bash
+npx create-next-app@latest my-blog --app --tailwind --typescript
+cd my-blog
+npm install @next/mdx gray-matter reading-time
+```
+
+### Configure MDX Support
+
+Update your `next.config.js`:
+
+```javascript
+import createMDX from '@next/mdx';
+
+const nextConfig = {
+  pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
+  output: 'export', // For static generation
+};
+
+const withMDX = createMDX({
+  options: {
+    remarkPlugins: [],
+    rehypePlugins: [],
+  },
+});
+
+export default withMDX(nextConfig);
+```
+
+## Content Structure
+
+Organize your content with a clear structure:
+
+```
+content/
+└── posts/
+    ├── first-post.mdx
+    ├── second-post.mdx
+    └── third-post.mdx
+```
+
+### Frontmatter Schema
+
+Each MDX file should include structured metadata:
+
+```markdown
+---
+title: "Your Post Title"
+description: "Brief description for SEO"
+date: "2024-01-05"
+category: "builds"
+tags: ["nextjs", "react"]
+---
+
+# Your Content Here
+```
+
+## Content Management System
+
+Create utilities to parse and manage your content:
+
+```javascript
+// lib/posts.js
+import fs from 'fs';
+import path from 'path';
+import matter from 'gray-matter';
+
+const postsDirectory = path.join(process.cwd(), 'content/posts');
+
+export function getAllPosts() {
+  const filenames = fs.readdirSync(postsDirectory);
+  
+  const posts = filenames
+    .filter(name => name.endsWith('.mdx'))
+    .map(filename => {
+      const fullPath = path.join(postsDirectory, filename);
+      const fileContents = fs.readFileSync(fullPath, 'utf8');
+      const { data, content } = matter(fileContents);
+      
+      return {
+        slug: filename.replace(/\.mdx$/, ''),
+        ...data,
+        content,
+      };
+    })
+    .sort((a, b) => new Date(b.date) - new Date(a.date));
+  
+  return posts;
+}
+```
+
+## Dynamic Routing
+
+Set up dynamic routes for individual posts:
+
+```javascript
+// app/[slug]/page.js
+import { getAllPosts, getPostBySlug } from '@/lib/posts';
+import { MDXRemote } from 'next-mdx-remote/rsc';
+
+export async function generateStaticParams() {
+  const posts = getAllPosts();
+  return posts.map(post => ({
+    slug: post.slug,
+  }));
+}
+
+export default function PostPage({ params }) {
+  const post = getPostBySlug(params.slug);
+  
+  return (
+    <article className="max-w-4xl mx-auto px-4 py-8">
+      <header className="mb-8">
+        <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
+        <p className="text-gray-600">{post.description}</p>
+        <time className="text-sm text-gray-500">{post.date}</time>
+      </header>
+      
+      <div className="prose prose-lg max-w-none">
+        <MDXRemote source={post.content} />
+      </div>
+    </article>
+  );
+}
+```
+
+## SEO Optimization
+
+Generate metadata for each post:
+
+```javascript
+export async function generateMetadata({ params }) {
+  const post = getPostBySlug(params.slug);
+  
+  return {
+    title: post.title,
+    description: post.description,
+    openGraph: {
+      title: post.title,
+      description: post.description,
+      type: 'article',
+      publishedTime: post.date,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.description,
+    },
+  };
+}
+```
+
+## Performance Considerations
+
+### Image Optimization
+
+Use Next.js Image component for optimal loading:
+
+```jsx
+import Image from 'next/image';
+
+// In your MDX content
+<Image 
+  src="/blog-image.jpg" 
+  alt="Description" 
+  width={800} 
+  height={400}
+  className="rounded-lg"
+/>
+```
+
+### Code Highlighting
+
+Add syntax highlighting for code blocks:
+
+```bash
+npm install rehype-highlight
+```
+
+```javascript
+// next.config.js
+const withMDX = createMDX({
+  options: {
+    rehypePlugins: [rehypeHighlight],
+  },
+});
+```
+
+## Deployment
+
+Deploy to Vercel for optimal performance:
+
+```bash
+npm run build
+# Vercel automatically detects Next.js projects
+```
+
+## Key Benefits
+
+This setup provides:
+
+1. **Fast Loading**: Static generation creates optimized pages
+2. **SEO Friendly**: Automatic metadata and sitemap generation
+3. **Developer Friendly**: Write in Markdown with React components
+4. **Scalable**: Easy to add new posts and features
+
+The combination of Next.js and MDX creates a powerful, flexible blogging platform that scales with your content needs while maintaining excellent performance.
+
+---
+
+*Want to see this in action? This very blog is built using these techniques!*
