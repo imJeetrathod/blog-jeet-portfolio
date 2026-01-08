@@ -1,12 +1,23 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import PostCard from './PostCard';
 import PostFilter from './PostFilter';
 
 export default function HomePage({ posts }) {
   const [filteredPosts, setFilteredPosts] = useState(posts);
   const [activeCategory, setActiveCategory] = useState('all');
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const heroRef = useRef(null);
+
+  const handleMouseMove = (e) => {
+    if (heroRef.current) {
+      const rect = heroRef.current.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      const y = ((e.clientY - rect.top) / rect.height) * 100;
+      setMousePosition({ x, y });
+    }
+  };
 
   const handleCategoryChange = (category) => {
     setActiveCategory(category);
@@ -47,12 +58,48 @@ export default function HomePage({ posts }) {
       </nav>
 
       {/* Hero Section */}
-      <section className="py-12 md:py-16 px-6">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-lg md:text-xl text-gray-400">
-            Notes from a Salesforce developer experimenting with AI workflows, tools, and ideas
+      <section 
+        ref={heroRef}
+        onMouseMove={handleMouseMove}
+        className="py-16 md:py-24 px-6 bg-gradient-to-b from-gray-900/50 to-black relative overflow-hidden"
+      >
+        <div className="max-w-4xl mx-auto text-center relative z-10">
+          <h1 className="text-xl md:text-2xl lg:text-3xl font-light leading-relaxed text-gray-100 tracking-wide">
+            Posts from a Salesforce developer experimenting with AI workflows, tools, and ideas
           </h1>
+          <div className="mt-8 relative">
+            {/* Interactive decorative line */}
+            <div 
+              className="w-24 h-px mx-auto relative overflow-hidden"
+              style={{
+                background: `linear-gradient(90deg, 
+                  transparent 0%, 
+                  rgba(156, 163, 175, ${0.3 + (mousePosition.x / 100) * 0.4}) ${Math.max(0, mousePosition.x - 20)}%, 
+                  rgba(59, 130, 246, ${0.6 + (mousePosition.y / 100) * 0.4}) ${mousePosition.x}%, 
+                  rgba(156, 163, 175, ${0.3 + (mousePosition.x / 100) * 0.4}) ${Math.min(100, mousePosition.x + 20)}%, 
+                  transparent 100%)`
+              }}
+            >
+              {/* Animated glow effect */}
+              <div 
+                className="absolute top-0 w-2 h-full bg-blue-400/60 blur-sm transition-all duration-300 ease-out"
+                style={{
+                  left: `${mousePosition.x}%`,
+                  transform: 'translateX(-50%)',
+                  opacity: mousePosition.x > 0 ? 1 : 0
+                }}
+              />
+            </div>
+          </div>
         </div>
+        
+        {/* Background interactive particles */}
+        <div 
+          className="absolute inset-0 opacity-20 pointer-events-none"
+          style={{
+            background: `radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(59, 130, 246, 0.1) 0%, transparent 50%)`
+          }}
+        />
       </section>
 
       {/* Posts Section */}
