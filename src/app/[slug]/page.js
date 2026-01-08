@@ -1,4 +1,4 @@
-import { getAllPosts, getPostBySlug } from '../../../lib/posts';
+import { getAllPosts, getPostBySlug, getRelatedPosts } from '../../../lib/posts';
 import PostContent from '../../../components/PostContent';
 import { notFound } from 'next/navigation';
 
@@ -62,6 +62,9 @@ export default async function PostPage({ params }) {
     notFound();
   }
 
+  // Get related posts (fetch more to show "view more" indicator)
+  const relatedPosts = await getRelatedPosts(post, 3);
+
   // JSON-LD structured data
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -97,7 +100,7 @@ export default async function PostPage({ params }) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <PostContent post={post} />
+      <PostContent post={post} relatedPosts={relatedPosts} />
     </>
   );
 }

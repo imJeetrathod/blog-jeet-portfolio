@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import { formatRelativeTime } from '../lib/dateUtils';
+import RelatedPosts from './RelatedPosts';
 
 const categoryColors = {
   ai: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
@@ -14,16 +16,7 @@ const categoryLabels = {
   random: 'Random',
 };
 
-export default function PostContent({ post }) {
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-  };
-
+export default function PostContent({ post, relatedPosts = [] }) {
   if (!post || !post.content) {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center">
@@ -72,7 +65,7 @@ export default function PostContent({ post }) {
               {categoryLabels[post.category]}
             </span>
             <time className="text-sm text-gray-500">
-              {formatDate(post.date)}
+              {formatRelativeTime(post.date)}
             </time>
             <span className="text-sm text-gray-500">
               {post.readingTime} min read
@@ -112,22 +105,27 @@ export default function PostContent({ post }) {
           />
         </article>
 
+        {/* Related Posts */}
+        <RelatedPosts posts={relatedPosts} />
+
         {/* Footer */}
-        <footer className="mt-20 pt-8 border-t border-gray-800">
-          <div className="flex items-center justify-between">
-            <Link 
-              href="/"
-              className="inline-flex items-center px-4 py-2 rounded-xl bg-gray-800/50 text-gray-300 hover:bg-gray-800 hover:text-white transition-all duration-200"
-            >
-              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-              All Posts
-            </Link>
-            
-            <div className="text-sm text-gray-500">
-              <p>© {new Date().getFullYear()} Jeet Rathod</p>
-            </div>
+        <footer className="mt-16 pt-8 border-t border-gray-800">
+          <div className="text-center text-gray-500 text-sm">
+            <p>
+              By{' '}
+              {post.author?.url ? (
+                <a 
+                  href={post.author.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-300 hover:text-white transition-colors underline"
+                >
+                  {post.author.name}
+                </a>
+              ) : (
+                <span className="text-gray-300">{post.author?.name || 'Jeet Rathod'}</span>
+              )}
+            </p>
           </div>
         </footer>
       </main>

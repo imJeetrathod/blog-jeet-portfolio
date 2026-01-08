@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { formatRelativeTime } from '../lib/dateUtils';
 
 const categoryColors = {
   ai: 'bg-blue-500/20 text-blue-300 border-blue-500/30',
@@ -15,15 +16,6 @@ const categoryLabels = {
 };
 
 export default function PostCard({ post }) {
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-  };
-
   return (
     <Link href={`/${post.slug}`} className="block group">
       <article className="p-6 rounded-lg border border-gray-800/50 bg-gray-900/20 hover:bg-gray-900/40 transition-all duration-200 hover:border-gray-700/60">
@@ -33,7 +25,7 @@ export default function PostCard({ post }) {
             {categoryLabels[post.category]}
           </span>
           <time className="text-sm text-gray-500">
-            {formatDate(post.date)}
+            {formatRelativeTime(post.date)}
           </time>
         </div>
 

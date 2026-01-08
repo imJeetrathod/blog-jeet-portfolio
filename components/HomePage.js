@@ -74,7 +74,7 @@ export default function HomePage({ posts }) {
       {/* Footer */}
       <footer className="py-12 px-6 border-t border-gray-800">
         <div className="max-w-4xl mx-auto text-center text-gray-500 text-sm">
-          <p>Built with Next.js and MDX • {new Date().getFullYear()}</p>
+          {/* Footer content removed for cleaner look */}
         </div>
       </footer>
     </div>
