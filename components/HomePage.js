@@ -23,7 +23,17 @@ export default function HomePage({ posts }) {
     <div className="min-h-screen bg-black text-white">
       {/* Navigation */}
       <nav className="px-6 py-4 border-b border-gray-800">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-4xl mx-auto flex items-center justify-between">
+          {/* Logo */}
+          <div className="flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" className="w-10 h-10" role="img" aria-label="Tech tools blog logo">
+              <rect width="32" height="32" rx="6" fill="#000"/>
+              <rect x="10" y="10" width="12" height="12" fill="#fff"/>
+              <rect x="18" y="10" width="4" height="4" fill="#000"/>
+            </svg>
+          </div>
+          
+          {/* Back to Portfolio */}
           <a 
             href="https://jeetrathod.vercel.app"
             className="inline-flex items-center text-sm text-gray-300 hover:text-white transition-colors"

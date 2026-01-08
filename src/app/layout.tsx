@@ -6,6 +6,11 @@ export const metadata: Metadata = {
   description: "A Salesforce developer exploring AI tools, building solutions with AI assistance, and documenting what actually works.",
   keywords: ["AI tools", "Salesforce", "AI experiments", "vibe coding", "AI-powered solutions"],
   authors: [{ name: "Jeet Rathod" }],
+  icons: {
+    icon: '/favicon.svg',
+    shortcut: '/favicon.svg',
+    apple: '/favicon.svg',
+  },
   openGraph: {
     title: "AI Experiments & Builds",
     description: "A Salesforce developer exploring AI tools, building solutions with AI assistance, and documenting what actually works.",
