@@ -1,0 +1,80 @@
+---
+title: "A Few Chrome Extensions I Built to Scratch an Itch"
+description: "Some small Chrome extensions I built for myself. Not products, just fixes for problems I kept running into, mostly with AI help."
+date: 2026-01-08
+category: builds
+tags: [chrome, extensions, javascript, productivity, ai, gemini]
+---
+---
+I have a folder on my laptop that’s basically my digital junk drawer. Random side projects, half-working demos, stuff I built because something annoyed me enough one afternoon.
+
+A surprising amount of it is Chrome extensions.
+
+I don’t really try to “build products.” It’s more like:  
+browser annoys me → I waste time → I think “ok, I’ll just build it myself.”  
+That loop happens way more often than I’d like to admit.
+
+Almost all of these were built with AI helping me write code, which still feels slightly unfair.
+
+## The tab problem (entirely my fault)
+
+My browser situation is bad. Dozens of tabs. Multiple windows. Zero memory of why half of them exist.
+
+Chrome’s built-in tools never worked the way my brain works, so I made my own extension: *Tab helper*.
+
+It started small. Just grouping tabs. Then it slowly grew into:
+- closing duplicate tabs
+- saving sessions
+- searching across everything
+- random power-user stuff I personally wanted
+
+There was no plan. I just kept telling the AI “ok now add this,” then “actually, change that,” and we iterated. It ended up solving a problem I fully created for myself.
+
+## A “good enough” AI grammar fixer
+
+I like tools like Grammarly, but I don’t like paying subscriptions for something I use occasionally. I was already playing with the Gemini API and wondered if I could make something that’s *good enough* for my own writing.
+
+So I built one.
+
+All it really does:
+- detects when I select text
+- shows a small “Fix with AI” button
+- replaces the text with a cleaned-up version
+
+The AI part was easy. The annoying part was UI: floating buttons, text selection edge cases, and not breaking random sites. I described the behavior to the AI, let it scaffold most of the script, then kept tweaking until it felt usable.
+
+Is it perfect? No.  
+Is it free and good enough for me? Yep.
+
+## Turning the browser into a command line
+
+This one started as “this might be cool” and ended as “oh… this actually works.”
+
+I wanted to control the browser using natural language. Not voice. Just typed commands. Basically a command line for the web.
+
+That became **AI Command Extension** (aka commandx).
+
+The idea is simple:
+I type something like “close all tabs except this one” →  
+AI turns that into JavaScript →  
+the extension runs it.
+
+Most of the work here wasn’t coding, it was prompt design. The AI isn’t just answering questions, it’s generating code that actually runs. When it works, it feels wild. When it doesn’t, it’s… educational.
+
+This is the first rough version — it’s not in the Chrome Store yet:  
+https://commandx.vercel.app/  
+(It’s currently down because I blew through the free API tier pretty fast. Oops.)
+
+## Why I keep doing this
+
+None of these are meant to be polished. They’re experiments. Ways to learn. Ways to remove friction *I* keep running into.
+
+What changed for me is how easy it feels to just start. I spend less time writing boilerplate and more time explaining what I want. The whole “vibe coding” thing sounds cringe, but it’s real. I define the problem, describe the behavior, then work with the AI until it behaves.
+
+You still need to understand code. You still need to read what it generates. But the barrier is way lower now.
+
+If you’re not already building things for yourself, start. You can solve your own problems, and sometimes that turns into something better — maybe even something big.
+
+Chrome extensions are a great place to begin. They’re simple, contained, and immediately useful.
+
+If something annoys you on the web, you can probably fix it. You already have an AI. Use it.
