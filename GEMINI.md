@@ -9,11 +9,14 @@ Write honest, practical notes that sound like they come from a real developer, n
 ## Site Context
 
 - **Purpose**: Personal notes on AI tools, Salesforce workflows, CLI experiments, and technical observations
-- **Audience**: Other developers who want practical insights, not tutorials
+- **Audience**: Other developers who want practical insights, not tutorials, in rare case tutorials.
 - **Tone**: Calm, honest, conversational. Like notes shared between colleagues
+- **Features**: Dynamic relative time display, smart related posts, flexible author attribution
 - **NOT**: Marketing content, comprehensive guides, or authoritative documentation
 
 ## Content Guidelines
+
+### Content Guidelines
 
 ### Writing Style
 - Write in first person when describing your experience
@@ -22,6 +25,13 @@ Write honest, practical notes that sound like they come from a real developer, n
 - It's okay to say "this didn't work" or "I'm not sure why"
 - No emojis, hype words, or marketing language
 - No fake confidence or exaggerated claims
+- Consider tag overlap for better related post suggestions
+
+### Image Usage
+- Place images strategically to support narrative flow
+- Use descriptive alt text in image references
+- Multiple images work well when showing different tools/approaches
+- Images should enhance understanding, not just decoration
 
 ### Structure
 - Start with a normal paragraph or H2 (##)
@@ -55,6 +65,12 @@ Write honest, practical notes that sound like they come from a real developer, n
 - Images: `public/images/posts/<slug>/`
 - Reference images as: `/images/posts/<slug>/image.png`
 
+### Blog Features
+- **Relative Time Display**: Posts show "X days ago" for recent content, full dates for older posts
+- **Related Posts**: System automatically suggests similar content based on tags and category
+- **Author Attribution**: Support for guest authors with clickable profile links
+- **Smart Navigation**: Header navigation, no redundant footer buttons
+
 ### Frontmatter (Required)
 ```yaml
 ---
@@ -63,6 +79,9 @@ description: What the reader will learn (140-160 chars)
 date: YYYY-MM-DD
 category: ai | salesforce | builds | random
 tags: [lowercase, relevant, tags]
+author:
+  name: Author Name (optional, defaults to Jeet Rathod)
+  url: https://author-profile-url.com (optional)
 ---
 ```
 
